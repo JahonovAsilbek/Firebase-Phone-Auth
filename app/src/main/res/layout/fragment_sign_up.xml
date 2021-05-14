@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FCFDFE"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUpFragment">
+
+    <TextView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:text="Xush kelibsiz"
+        android:id="@+id/welcome"
+        android:textSize="25sp"
+        style="@style/sign_up"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome"
+        android:layout_marginStart="30dp"
+        android:text="Avtorizatsiyadan o’tish uchun telefon raqamingizni kiriting"
+        android:id="@+id/text1"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        style="@style/sign_up"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text1"
+        android:layout_marginStart="30dp"
+        android:text="Telefon raqamingiz"
+        android:id="@+id/text2"
+        android:layout_marginTop="35dp"
+        android:textSize="16sp"
+        style="@style/telefon_raq"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content" />
+
+    <com.vicmikhailau.maskededittext.MaskedEditText
+        android:id="@+id/input_et"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:inputType="phone"
+        android:layout_marginEnd="30dp"
+        app:mask="(+998 ##) ###-##-##"
+        style="@style/input_number"
+        android:paddingStart="10dp"
+        android:hint="(+998 90) 123-45-67"
+        app:layout_constraintTop_toBottomOf="@id/text2"
+        android:background="@drawable/edit_back"
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:background="@drawable/sign_btn_back"
+        android:id="@+id/sign_up_btn"
+        app:layout_constraintTop_toBottomOf="@id/input_et"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Kirish"
+        android:textSize="16sp"
+        style="@style/kirish"
+        android:textAllCaps="false"
+        android:layout_width="165dp"
+        android:layout_height="55dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
