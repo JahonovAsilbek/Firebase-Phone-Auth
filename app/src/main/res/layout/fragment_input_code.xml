@@ -75,6 +75,7 @@ raqamiga yuborildi"
 
 
     <LinearLayout
+        android:id="@+id/resend"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_et"
         android:layout_width="wrap_content"
@@ -96,12 +97,11 @@ raqamiga yuborildi"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/resend"
             style="@style/kodni_qayta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
-            android:text="Kodni qayta kiritish"
+            android:text="Kodni qayta olish"
             android:textSize="16sp" />
 
     </LinearLayout>

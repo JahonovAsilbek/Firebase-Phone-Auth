@@ -1,6 +1,5 @@
 package uz.revolution.firebaseauth
 
-import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -40,7 +39,8 @@ class InputCodeFragment : Fragment() {
     lateinit var binding: FragmentInputCodeBinding
     lateinit var auth: FirebaseAuth
     lateinit var storedVerificationId: String
-    lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+    private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+    private var timer: CountDownTimer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +50,7 @@ class InputCodeFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         auth.setLanguageCode("uz")
+        loadTimer()
         loadDataToView()
 
 //      To apply the default app language instead of explicitly setting it.
@@ -73,17 +74,16 @@ class InputCodeFragment : Fragment() {
 
         binding.resend.setOnClickListener {
             phoneNumber?.let { it1 -> resendCode(it1) }
+            timer?.cancel()
+            loadTimer()
         }
 
         return binding.root
     }
 
-    private fun loadDataToView() {
-        binding.text1.text =
-            "Bir martalik kod  ${phoneNumber2?.replaceAfter("-", "**-**")} raqamiga yuborildi"
+    private fun loadTimer() {
 
-        object : CountDownTimer(46000, 1000) {
-            @SuppressLint("SetTextI18n")
+        timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.timer.text = "00:" + millisUntilFinished / 1000
             }
@@ -91,8 +91,13 @@ class InputCodeFragment : Fragment() {
             override fun onFinish() {
                 binding.timer.text = "00:00"
             }
-        }.start()
+        }
+        timer?.start()
+    }
 
+    private fun loadDataToView() {
+        binding.text1.text =
+            "Bir martalik kod  ${phoneNumber2?.replaceAfter("-", "**-**")} raqamiga yuborildi"
     }
 
     private fun verifyCode() {
@@ -113,15 +118,17 @@ class InputCodeFragment : Fragment() {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    fun resendCode(phoneNumber: String) {
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phoneNumber)       // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(requireActivity())                 // Activity (for callback binding)
-            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-            .setForceResendingToken(resendToken)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
+    private fun resendCode(phoneNumber: String) {
+        if (resendToken != null) {
+            val options = PhoneAuthOptions.newBuilder(auth)
+                .setPhoneNumber(phoneNumber)       // Phone number to verify
+                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                .setActivity(requireActivity())                 // Activity (for callback binding)
+                .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
+                .setForceResendingToken(resendToken!!)
+                .build()
+            PhoneAuthProvider.verifyPhoneNumber(options)
+        }
     }
 
 

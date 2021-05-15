@@ -24,6 +24,8 @@
             app:destination="@id/succesFragment" />
     </fragment>
     <fragment
+        app:popUpTo="@id/signUpFragment"
+        app:popUpToInclusive="true"
         android:id="@+id/succesFragment"
         android:name="uz.revolution.firebasephoneauth.SuccesFragment"
         android:label="fragment_succes"
