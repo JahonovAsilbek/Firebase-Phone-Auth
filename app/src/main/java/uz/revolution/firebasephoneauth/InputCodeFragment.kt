@@ -76,6 +76,7 @@ class InputCodeFragment : Fragment() {
             phoneNumber?.let { it1 -> resendCode(it1) }
             timer?.cancel()
             loadTimer()
+            binding.inputEt.isEnabled = true
         }
 
         return binding.root
@@ -90,9 +91,16 @@ class InputCodeFragment : Fragment() {
 
             override fun onFinish() {
                 binding.timer.text = "00:00"
+                binding.inputEt.isEnabled = false
+
             }
         }
         timer?.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timer?.cancel()
     }
 
     private fun loadDataToView() {
