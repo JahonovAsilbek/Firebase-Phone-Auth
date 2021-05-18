@@ -1,5 +1,6 @@
 package uz.revolution.firebaseauth
 
+import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -85,8 +86,13 @@ class InputCodeFragment : Fragment() {
     private fun loadTimer() {
 
         timer = object : CountDownTimer(60000, 1000) {
+            @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
-                binding.timer.text = "00:" + millisUntilFinished / 1000
+                if (millisUntilFinished / 1000 < 10) {
+                    binding.timer.text = "00:0" + millisUntilFinished / 1000
+                } else {
+                    binding.timer.text = "00:" + millisUntilFinished / 1000
+                }
             }
 
             override fun onFinish() {
